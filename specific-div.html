@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>InTime List in Specific div</title>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+<a href="index.html">Go Back</a>
+<div id="items" style="display:inline-block;border:1px solid #eee;height: 600px;overflow-y:auto;"></div>
+<script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+        onTimeListDisplayer.initialize();
+    })
+
+    var onTimeListDisplayer = {
+        data: {
+            list_param_num: 1,
+            max_param_count: 5,
+            get_items_path: "ajax.php"
+        },
+        initialize: function() {
+            document.getElementById("items").addEventListener("scroll", this.handleScroll);
+            this.loadList();
+        },
+        handleScroll: function() {
+            if (document.getElementById("items").scrollTop + parseInt(document.getElementById("items").style.height, 10) >= document.getElementById("items").scrollHeight ) {
+                onTimeListDisplayer.loadList();
+            }
+        },
+        loadList: function() {
+
+            $.post(onTimeListDisplayer.data.get_items_path, {get_params:true, get_param_count:onTimeListDisplayer.data.max_param_count, from:onTimeListDisplayer.data.list_param_num}, function (data, status) {
+
+                if(data!="")
+                {
+                    var result = $.parseJSON(data);
+
+                    for(var i=0; i<result.length; i++)
+                    {
+                        var output = "<div><h2>"+result[i][0]+"</h2><img src='"+result[i][1]+"'></div>";
+                        $(output).appendTo("#items");
+                    }
+                    onTimeListDisplayer.data.list_param_num += result.length;
+                }
+            });
+        }
+
+    }
+
+</script>
+
+
+</body>
+</html>
