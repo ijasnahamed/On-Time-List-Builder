@@ -1,4 +1,4 @@
 On-Time List Builder
 ====================
 
-Now a days, we have seen many websites loading data in alist based on out scroll. Here i had developed a list based on list and list data will be populated using ajax request.
+Now a days, we have seen many websites loading data in a list based on our scroll. Here i have developed a list based on user scroll and list data will be populated using ajax request.
